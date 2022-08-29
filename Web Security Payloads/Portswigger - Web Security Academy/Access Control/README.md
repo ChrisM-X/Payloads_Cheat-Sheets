@@ -21,21 +21,25 @@
 
 
 ### Testing with Different User Account:
+
     * If you have access to a normal user & admin user.  Walk through the entire functionality that the higher privileged user can access, then attempt to access that functionality with the lower privileged user.  This requires strict comparison, functionality that both users should have access to is not Vertical Privilege Escalation.  We can use Burp’s “compare site maps” feature to help.
 
     * If you have access to 2 accounts of the same privilege level, identify if Horizontal Privilege Escalation is possible.
 
 ### Testing Multistage Processes:
+
     * Burp’s “compare site maps” feature will not work here, because the requests sent may be out of order from the standard process.  This can lead to false positives/negatives.
 
     * A way to perform this testing is to walk through a protected multistage process and user Burp to access each one of those requests by a lower privileged user.  Sometimes the initial request in the process is protected but the subsequent requests are not protected from unauthorized access.
 
 ### Testing with Limited Access:
+
     * If you only have 1 account to test with or no accounts at all, we can map out the application to identify any hidden sensitive/protected functionality.
     * When pages are identified that may return different data depending on the user, try adding parameters/cookies such as – admin=true, debug=true, etc.
     * Identify functionality where the application grants a user access to a subset of wider resources, such as emails, orders, documents, etc.  If these resources are retrieved through some predictable identifiers ( ?order=1234 ) try to determine values that reference other resources, we should not have access too. <br>
 
 ### Testing Restrictions on HTTP Methods:
+
     * An application’s access controls may be bypassed by platform level controls.
     * If there is a protected functionality that only a higher-level privilege user can access, test whether this functionality can be accessed with a different HTTP method.  Then determine if a lower-level privilege user can bypass access controls using this method.
 
