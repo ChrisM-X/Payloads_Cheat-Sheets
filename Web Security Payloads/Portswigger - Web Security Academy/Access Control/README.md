@@ -1,4 +1,4 @@
-# Access Control - Portswigger
+# Access Control
 
 ## Summary
 * [General Recon For Access Control Vulnerabilities](#recon)
