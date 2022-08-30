@@ -2,8 +2,8 @@
 
 ## Summary
 
-* General Recon For Comamnd Injection Vulnerabilities
-* Portswigger Labs Cheat Sheet / Payloads
+* [General Recon For Comamnd Injection Vulnerabilities](#recon)
+* [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
 ## Recon
 
