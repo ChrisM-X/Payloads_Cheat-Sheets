@@ -67,3 +67,4 @@
 * If the application offers a coupon code that can be used when submitting an order, check if this coupon can be used an infinite number of times once per order.  We can purchase a gift card and use the coupon code when purchasing it, and when redeeming the gift card, we earn a profit.  An “Infinite money logic flaw” can be exploited here.
 
 
+* One last example not discussed here - [Encryption Oracle](https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-authentication-bypass-via-encryption-oracle)
