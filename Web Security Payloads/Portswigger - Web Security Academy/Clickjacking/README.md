@@ -39,7 +39,7 @@
 <iframe src="$url"></iframe>
 ```
 
-### Prepopulate For - Clickjacking
+### Prepopulate Form - Clickjacking
 
 * Use a clickjacking payload, which will prepopulate a \<form\> parameter’s value, using it as a query parameter in a GET request.  Include this targeted web page in an \<iframe\>.  Since the form will be prepopulated, we only need to induce the user into clicking on the region that will submit the POST request.
 
