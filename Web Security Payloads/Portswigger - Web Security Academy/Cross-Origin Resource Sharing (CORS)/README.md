@@ -98,7 +98,7 @@ Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: subdomain.vulnerable-app.com
 ```
 
-* This is possible as the subdomain is allowed to view the authenticated responses from the main application.  When the XSS script, which essentially will be hosted within the subdomain, is executed, the Origin header will include the **subdomain.vulnerable-app.com** value.  This allows the response to contain the authenticated data. The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
+* The subdomain is allowed to view the authenticated responses from the main application.  When the XSS script, which essentially will be hosted within the subdomain, is executed, the Origin header will include the **subdomain.vulnerable-app.com** value.  This allows the response to contain the authenticated data. The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
 
     * *Make sure to set the file extension to .html or no extension also works in Exploit Server labs*
 
