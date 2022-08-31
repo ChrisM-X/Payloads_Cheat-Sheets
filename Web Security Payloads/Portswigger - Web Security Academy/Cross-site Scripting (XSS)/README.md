@@ -85,19 +85,23 @@
     * **Test Strings:**
 
 ```html
-< > " ' ` / \
-
+<>"'/\`
+```
+```html
 Test123parameterName
-
+```
+```html
 <u>Test123</u>
-
+```
+```html
 <script>alert("Test123")</script>
-
+```
+```html
 <script>alert('Test123')</script>
 ```
 
 
-* Depending on that context, the following payloads can be used to break out of the context and potentially execute XSS:
+* **Depending on that context, the following payloads can be used to break out of the context and potentially execute XSS:**
 
 
 ### No encoding implemented on the injected data
