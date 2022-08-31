@@ -76,14 +76,14 @@
 ..%25%32%66
 ```
 
-* URL encode the / character then encode only the % character in ../ :
+   * URL encode the / character then encode only the % character in ../ :
 
 ```bash
 ..%252f
 ```
 
 <br><br>
-* **Burp Pro includes a Path Traversal fuzzing wordlist that has many variations of encoding sequences to use.**
+**Burp Pro includes a Path Traversal fuzzing wordlist that has many variations of encoding sequences to use.**
 <br><br>
 
 
