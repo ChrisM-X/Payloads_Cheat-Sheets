@@ -1,7 +1,7 @@
-## **Web Security Academy - Payloads & Cheat Sheets**
+# **Web Security Academy - Payloads & Cheat Sheets**
 
 
-This section contains cheat sheets / payloads for the different topics available in the web security academy provided by Portswigger
+## This section contains cheat sheets / payloads for the different topics available in the web security academy provided by Portswigger
 
 
 **Pending to add the rest of the topics:**
@@ -14,3 +14,7 @@ This section contains cheat sheets / payloads for the different topics available
 * [ ] HTTP Request Smuggling
 * [ ] OAuth Authentication
 * [ ] JWT Attacks
+
+<br><br>
+
+**Most of the labs are included in these cheat sheets, some "Expert Level" labs are currently missing.**
