@@ -1,0 +1,53 @@
+# WebSockets
+
+
+## Summary
+
+* [Recon for WebSockets](#recon)
+
+* [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
+
+* **View the .pdf file in the folder for more details, the file can be viewed inline without needing to download it**
+
+
+## Recon
+
+
+### Identify WebSockets Requests
+
+* On the Proxy tab in Burp Suite, there is a “WebSockets history” section.  This section will contain any WebSockets messages initiated by the application.  If this section has any requests, then the application is using WebSockets.
+
+* After identifying that WebSockets are in use, the 3 labs on this document can help to formulate ideas to attack the application.
+
+
+## Cheat Sheet
+
+### XSS Exploit
+
+* Submit an XSS payload within a parameter in the WebSocket message.  The application is returning this value without any input validation or encoding, and it is between some HTML tags, so the data is executed as JavaScript code.
+
+
+### XSS Exploit + Brute Force Bypass
+
+* Use the WebSockets to exploit an XSS vulnerability.  If the application is blacklisting your IP address, try using the X-Forwarded-For header to spoof the IP address.  Try a variety of different payloads depending on how the application responds.  
+
+* Final XSS payload used backticks since the application was not allowing to use parethesis:
+
+    * {"message":"Test\<img src=x oNeRRoR=alert\`1\`\>"}
+
+
+### Cross-site WebSocket Hijacking
+
+* Identify if the WebSockets Handshake request is vulnerable to Cross-Origin WebSocket Hijacking/CSRF attack.  The handshake request can be identified by looking for the following headers in the WebSockets requests:
+
+
+    * Sec-WebSocket-Key: wDqumtseNBJdhkihL6PW7w==
+
+
+    * Connection: keep-alive, Upgrade
+
+    
+    * Upgrade: websocket
+
+
+* If the handshake request relies solely on session cookies and does not contain any unpredictable parameters, then it is vulnerable to a CSRF attack.  Depending on how the application uses the WebSocket's, we can perform unauthorized actions or retrieve sensitive data that the user can access.
