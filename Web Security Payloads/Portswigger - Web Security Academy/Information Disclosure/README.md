@@ -4,8 +4,6 @@
 
 * [General Recon](#general-recon)
 
-* [Information Disclosure](#what-is-information-disclosure?)
-
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
 
