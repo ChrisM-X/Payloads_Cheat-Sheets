@@ -22,7 +22,7 @@
 
 ### Testing with Different User Account:
 
-* If you have access to a normal user & admin user.  Walk through the entire functionality that the higher privileged user can access, then attempt to access that functionality with the lower privileged user.  This requires strict comparison, functionality that both users should have access to is not Vertical Privilege Escalation.  We can use Burp’s “compare site maps” feature to help.
+* If you have access to a normal user & admin user.  Walk through the entire functionality that the higher privileged user can access, then attempt to access that functionality with the lower privileged user.  This requires strict comparison, functionality that both users should have access to is not Vertical Privilege Escalation.  We can use Burp’s [\“compare site maps\”](https://medium.com/@chris-m0/how-to-use-burp-suites-compare-site-maps-function-799f5b742dfc) feature to help.
 
 * If you have access to 2 accounts of the same privilege level, identify if Horizontal Privilege Escalation is possible.
 
