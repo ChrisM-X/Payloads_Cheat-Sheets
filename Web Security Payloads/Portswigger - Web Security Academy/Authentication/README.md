@@ -5,6 +5,13 @@
 * [General Recon For Authentication Vulnerabilities](#recon)
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/authentication
+* https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/README
+* https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+
 ## Recon
 
 * Walk-through the application and identify any processes that pertain to user identification ( e.g. login, registration, reset/forgot password, etc. )
