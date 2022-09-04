@@ -5,6 +5,14 @@
 * [General Recon For Access Control Vulnerabilities](#recon)
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/access-control
+* https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+* https://owasp.org/www-community/Access_Control
+* https://owasp.org/www-community/Broken_Access_Control
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/05-Authorization_Testing/README
+
 ## Recon
 
 * Map out the application and review the results of the mapping exercises
