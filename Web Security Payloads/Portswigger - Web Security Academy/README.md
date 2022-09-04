@@ -1,7 +1,7 @@
 # **Web Security Academy - Payloads & Cheat Sheets**
 
 
-## This section contains cheat sheets / payloads for the different topics available in the web security academy provided by Portswigger
+### This section contains cheat sheets / payloads for the different topics available in the web security academy provided by Portswigger
 
 
 **Pending to add the rest of the topics:**
