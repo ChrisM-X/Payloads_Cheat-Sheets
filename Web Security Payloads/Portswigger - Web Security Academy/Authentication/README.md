@@ -65,7 +65,7 @@
 
 
 ### Logic Flaw Bypass:  
-* It may be possible to submit multiple passwords with just one HTTP request by using an Array of Strings -  [“test123”, “password”, …].
+* It may be possible to submit multiple passwords with just one HTTP request by using an Array of Strings ->  [“test123”, “password”, …].
 
 
 ### 2FA Bypass:  
@@ -101,7 +101,7 @@
 ### Authentication Bypass:  
 * When using the “Forgot password” functionality on an application, identify if it is possible to manipulate the domain used in the password reset link.  We can use headers such as (Host, X-Forwarded-Host, or X-Host) to do this.  If this is possible then we may be able to steal another user’s reset token to update their password.  
 
-* For example, if we can manipulate the password reset link to be https://ATTACKER-SERVER.COM/reset?token=xxx, when the user clicks this link that they receive in their email, the request will be sent to the attacker's server and the query parameter will be logged.  Now we can use this token in the correct application domain to reset the victim user's password. 
+* For example, if we can manipulate the password reset link to be https://ATTACKER-SERVER.COM/reset?token=xxx, when the user clicks on this link that they receive in their email, the request will be sent to the attacker's server and the query parameter will be logged.  Now we can use this password reset token in the correct application domain to reset the victim user's password. 
 
 * Check out the following lab for an example - Lab: Password reset poisoning via middleware
 
@@ -109,4 +109,4 @@
 ### Verbose Messages:  
 * The login page is not the only place that can contain overly verbose messages indicating that a username or password is correct/incorrect.  If the application has a change password functionality, we can potentially use this function to brute force the correct password of another user by using the application’s verbose responses.
 
-* For example, in a change password function, supplying different combinations for correct/incorrect values in the currentPassword, newPassword, confirmNewPassword parameters, may result in a method to enumerate user credentials.
+* For example, in a change password function, supplying different combinations for correct/incorrect values in the userName, currentPassword, newPassword, and confirmNewPassword parameters, may result in a method to enumerate user credentials.
