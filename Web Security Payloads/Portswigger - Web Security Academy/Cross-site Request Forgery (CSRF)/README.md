@@ -6,6 +6,12 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/csrf
+* https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery
+
 ## Recon
 
 ### Identify Potential CSRF Vectors
@@ -14,7 +20,9 @@
 
 * Some examples of sensitive actions can be changing email address, password, shipping address, transferring funds, etc.
 
-* Create an HTML page that performs the request without user interaction.  For GET requests, we can place the vulnerable URL inside of an <img> tag within a src attribute.  For POST requests, we can create a form that contains all the required parameters and issues a request to the vulnerable URL.  JavaScript can then be used to automatically submit the form when the page loads.
+* Create an HTML page that performs the request without user interaction.  
+  * For GET requests, we can place the vulnerable URL inside of an \<img\> tag within a src attribute.  
+  * For POST requests, we can create a form that contains all the required parameters and issues a request to the vulnerable URL.  JavaScript can then be used to automatically submit the form when the page loads.
 
 * While we have an authenticated session on the application, we can load this HTML page in the same browser to confirm if the request was processed successfully.
 
@@ -66,7 +74,9 @@
 
 ### CSRF Protection Bypass - HTTP Method Change
 
-* When the application is using a CSRF Token in a body parameter of a POST request, change the HTTP request method to GET and leave out the CSRF Token parameter.  This can potentially bypass the CSRF defense put in place.  This can happen due to frameworks only implementing CSRF protection on state-changing requests, and state-changing requests should only be done with POST method not GET.
+* When the application is using a CSRF Token in a body parameter of a POST request, change the HTTP request method to GET and leave out the CSRF Token parameter.  This can potentially bypass the CSRF defense put in place.  
+
+* This can happen due to frameworks only implementing CSRF protection on state-changing requests, and state-changing requests should only be done with POST method not GET.
 
 
 ### CSRF Protection Bypass - Remove CSRF Parameter/Value
@@ -76,7 +86,9 @@
 
 ### CSRF Protection Bypass – CSRF Token Not Tied to User Session
 
-* CSRF Tokens may not be tied to the user’s session.  The application may just be keeping a pool of valid tokens and if the submitted request contains one of these tokens, then the request will be processed successfully.  An attacker can log into the application, obtain a valid token and use this CSRF token when attacking other users via a CSRF attack.
+* CSRF Tokens may not be tied to the user’s session.  The application may just be keeping a pool of valid tokens and if the submitted request contains one of these tokens, then the request will be processed successfully.  
+
+* An attacker can log into the application, obtain a valid token and use this CSRF token when attacking other users via a CSRF attack.
 
 
 ### CSRF Protection Bypass – CSRF Token Tied to an Arbitrary Cookie
@@ -128,7 +140,8 @@
 
 ### CSRF Protection Bypass - Referer Header Validation Bypass
 
-* If the application is using the Referer header for protection against CSRF, remove the header/value completely and review if the request was processed successfully.  If the request was still successful, we can craft an HTML form that includes some attributes that will cause the browser to drop the “Referer” header with the request.  This will bypass the “protection” in place.
+* If the application is using the Referer header for protection against CSRF, remove the header/value completely and review if the request was processed successfully.  
+* If the request was still successful, we can craft an HTML form that includes some attributes that will cause the browser to drop the “Referer” header with the request.  This will bypass the “protection” in place.
 
 
 ```html
