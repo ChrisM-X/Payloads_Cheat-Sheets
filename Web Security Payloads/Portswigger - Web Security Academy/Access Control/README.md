@@ -51,7 +51,7 @@
 
 * If you only have 1 account to test with or no accounts at all, we can map out the application to identify any hidden sensitive/protected functionality.
 
-* When pages are identified that may return different data depending on the user, try adding parameters/cookies such as  –  admin=true, debug=true, etc.
+* When pages are identified that may return different data depending on the user, try adding parameters/cookies such as,   admin=true, debug=true, etc.
 
 * Identify functionality where the application grants a user access to a subset of wider resources, such as emails, orders, documents, etc.  If these resources are retrieved through some predictable identifiers ( ?order=1234 ) try to determine values that reference other resources, we should not have access to and attempt to view the data.
 
@@ -86,7 +86,7 @@
 ### HTTP Header Bypass
 * Use non-standard headers to potentially bypass access control restrictions on endpoints.
 
-* For example, the following header can be used to access the admin interface on the application  -  X-Original-URL: /admin  
+* For example, the following header can be used to access the admin interface on the application:  X-Original-URL: /admin  
 
 ### HTTP Method Bypass
 * Use different HTTP methods when requesting a resource.  This may bypass the access controls implemented on the endpoint.  
@@ -102,13 +102,15 @@
 * IDOR vulnerability allowed us to view another user's account information.  This time the parameter value was unpredictable, however, there was some functionality on the application which exposed other user’s GUID value.  Which can be used to view their account information in an endpoint like ?id=xxxx-xxxx…
 
 ### Redirect Leakage
-* When submitting an invalid account on the following endpoint /my-account?id= we receive a 302 HTTP response with no body.  If we submit a valid account on the endpoint, we still receive a 302 HTTP response, but the response body is disclosing sensitive information for this user.
+* When submitting an invalid account on the following endpoint "/my-account?id=xxx" we receive a 302 HTTP response with no body.  If we submit a valid account on the endpoint, we still receive a 302 HTTP response, but the response body is disclosing sensitive information for the specified user.
 
 ### IDOR
-* If there is a endpointt similar to this one  -  /download/2.txt, change the file to /download/1.txt, this may disclose valuable information that may belong to other users on the application.
+* If there is a endpoint similar to this one  ->  /download/2.txt, change the file to -> /download/1.txt, this may disclose valuable information that may belong to other users on the application.
 
 ### Multi-step Bypass
-* When testing a multi-step process with an admin account, test to see if a lower privilege user can bypass the access controls on any of those steps individually.  If it is a 3-step process, the first 2 steps may be properly protected, but the last step may be left unsecured.
+* When testing a multi-step process with an admin account, test to see if a lower privilege user can bypass the access controls on any of those steps individually.  
+
+* If it is a 3-step process, the first 2 steps may be properly protected, but the last step may be left unsecured.
 
 ### Referer Header Bypass
 * The Referer header may be used to prevent unauthorized access to certain endpoints on the application.  If we can figure out what the required value is, we may be able to bypass this restriction.
