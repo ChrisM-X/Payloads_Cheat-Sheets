@@ -6,6 +6,13 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+
+## Resources
+
+* https://portswigger.net/web-security/file-path-traversal
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include
+
+
 ## Recon
 
 ### Identify Directory Traversal
@@ -76,7 +83,7 @@
 ..%25%32%66
 ```
 
-   * URL encode the / character then encode only the % character in ../ :
+   * URL encode the / character ..%2f , then URL encode only the % character in ..%2f :
 
 ```bash
 ..%252f
