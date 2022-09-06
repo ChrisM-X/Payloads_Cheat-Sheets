@@ -17,4 +17,4 @@
 
 <br><br>
 
-**Most of the labs are included in these cheat sheets, some "Expert Level" labs are currently missing.**
+**Most of the labs are included in these cheat sheets, some "Expert Level" labs related payloads are currently missing.**
