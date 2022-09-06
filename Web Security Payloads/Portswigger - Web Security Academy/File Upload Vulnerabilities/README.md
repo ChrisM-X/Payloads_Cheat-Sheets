@@ -6,6 +6,12 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/file-upload
+* https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload
+* https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/09-Test_Upload_of_Malicious_Files
 
 ## Recon
 
@@ -31,7 +37,7 @@
 
     * Content-Type header:  application/x-httpd-php
 
-    * File Content:  <?php echo file_get_contents('/path/to/target/file'); ?>
+    * File Content:  \<?php echo file_get_contents('/path/to/target/file'); ?\>
 
 * Now view the uploaded file within the Webroot and we should see the contents of the file specified.  The “viewing” of the file here caused its execution.
 
@@ -92,11 +98,13 @@ AddType application/x-httpd-php .php5
 malicious.php%00.png
 ```
 
-* More methods: https://portswigger.net/web-security/file-upload#obfuscating-file-extensions
+* More bypass methods: https://portswigger.net/web-security/file-upload#obfuscating-file-extensions
 
 
 
 ### Bypass JPEG Signature Validation
+
+* Here the application may be checking that the file's contents begin with a certain byte structure (Magic Numbers).
 
 * Simply inject the malicious code after the beginning bytes of the file to bypass this validation.
 
@@ -115,8 +123,4 @@ malicious.php%00.png
 ![File Image4](https://github.com/ChrisM-X/Payloads_Cheat-Sheets/blob/main/Web%20Security%20Payloads/Portswigger%20-%20Web%20Security%20Academy/File%20Upload%20Vulnerabilities/Images/FileUploads-4.png)
 
 
-<br><br><br>
-
-More Resources:
-
-* https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload
+<br>
