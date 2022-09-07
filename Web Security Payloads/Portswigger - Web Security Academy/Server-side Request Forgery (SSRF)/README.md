@@ -7,6 +7,13 @@
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
 
+## Resources
+
+* https://portswigger.net/web-security/ssrf
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/19-Testing_for_Server-Side_Request_Forgery 
+
+
 ## Recon
 
 ### Identify SSRF
@@ -28,6 +35,8 @@
 
 * Use a localhost or valid internal IP address, through a SSRF vector, to potentially bypass access controls implemented on sensitive resources on the application that only allow access to admin users or through a specific IP address/network-interface:
 
+   * Examples:
+
 ```
 http://localhost/admin
 ```
@@ -43,6 +52,7 @@ http://192.168.0.5:8080/admin
 
 * Ideally, we should know how the application responds to a valid vs invalid specified resources, so we can easily determine when an injected value is valid:
 
+   * Examples:
 
 ```
 http://192.168.0.1:22
@@ -111,7 +121,8 @@ https://expected-host@evil-host/evil-path#
 * Inject a payload that will trigger an HTTP connection to a domain that you control and monitor for any network traffic.
 
 * Inject this payload in all susceptible parameters and headers (Referer):
-    * Example:  Referer: https://burp-collab.net
+
+    * Example:  Referer: https://ATTACKER-SERVER
 
 
 
