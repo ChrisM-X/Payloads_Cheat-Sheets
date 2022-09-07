@@ -6,6 +6,12 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/information-disclosure
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/README
+
 
 ## General Recon
 
@@ -42,7 +48,7 @@
 
 ![Stack Trace](https://github.com/ChrisM-X/Payloads_Cheat-Sheets/blob/main/Web%20Security%20Payloads/Portswigger%20-%20Web%20Security%20Academy/Information%20Disclosure/Images/StackTrace1.png)
 
-<br><br><br>
+<br><br>
 
 * Burp Pro has a “Search” functionality under the “Engagement Tools” that can help to identify any sensitive information in the responses of a specific target domain.  We can search for some keywords such as password, secret, key, etc.
 
